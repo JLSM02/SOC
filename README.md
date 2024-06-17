@@ -10,4 +10,8 @@ This repository aims to be a portfolio of my work during my Bachelor's Final Pro
   
   	·nohomogsimulation: work in progress.
 
+-The simulationX.py files are use to call the fortran subroutine several times and manage the data.
+
 -The .pynb files are data analysis of physics simulations.
+
+For compiling Fortran files to python modules type: python -m numpy.f2py -c --fcompiler=gnu95 --compiler=mingw32 <programName>.f90 -m <moduleName>
