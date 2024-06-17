@@ -9,5 +9,5 @@ This repository aims to be a portfolio of my work during my Bachelor's Final Pro
 		·genanimdata: to be used with animationmaker.py
   
     		·nohomogsimulation: work in progress
-	
+
 -The .pynb files are data analysis of physics simulations.
