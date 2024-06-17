@@ -15,3 +15,12 @@ This repository aims to be a portfolio of my work during my Bachelor's Final Pro
 -The analisisX.ipynb notebooks are used for data analysis of physics simulations.
 
 For compiling Fortran files to python modules type: python -m numpy.f2py -c --fcompiler=gnu95 --compiler=mingw32 <programName>.f90 -m <moduleName>
+
+
+Here are some resources that I found useful during the development:
+
+	·Information about  RANDOM_NUMBER subroutine in fortran: https://gcc.gnu.org/onlinedocs/gfortran/RANDOM_005fNUMBER.html
+
+	·Information about data types and formatting, Fortran: https://www.math.hawaii.edu/~hile/fortran/fort3.htm
+
+	·How to write on files, Fortran: https://www.tutorialspoint.com/fortran/fortran_file_input_output.htm
