@@ -14,7 +14,7 @@ This repository aims to be a portfolio of my work during my Bachelor's Final Pro
 
 -The analisisX.ipynb notebooks are used for data analysis of physics simulations.
 
-For compiling Fortran files to python modules type: python -m numpy.f2py -c --fcompiler=gnu95 --compiler=mingw32 <programName>.f90 -m <moduleName>
+For compiling Fortran files to python modules on Windows type: python -m numpy.f2py -c --fcompiler=gnu95 --compiler=mingw32 <programName>.f90 -m <moduleName>
 
 
 Here are some resources that I found useful during the development:
