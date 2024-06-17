@@ -1,4 +1,4 @@
-subroutine standardSimulation (l, limit, statistic, randomness, filename) !Open, does not check for area or lost sand
+subroutine standardSimulation (l, limit, statistic, randomness, filename) !Open boundaries, does not check for area or lost sand
     implicit none
 
     ! Input arguments
@@ -8,12 +8,9 @@ subroutine standardSimulation (l, limit, statistic, randomness, filename) !Open,
 
     ! Internal Variables
     integer :: j, i, k, i_randy, i_randx, queue_length, nf_queue_length, time, size, duration, x, y, i_randn, frame_size
-    !integer :: lost_sand, sand_in_model !Enable to check if sand-processes are missing
-    !integer :: area !Enable if want to compute the area
     real :: r_randy, r_randx, r_randn
     logical :: next_sand, topling
     integer :: M(l, l), Queue(2,l*l), nf_Queue(2,l*l)
-    !integer :: A(l,l) !Enable if want to compute the area
 
     ! Variable inicialization
     M = 0 ! Matrix where the simulation will be done
@@ -34,10 +31,7 @@ subroutine standardSimulation (l, limit, statistic, randomness, filename) !Open,
     ! Main loop (j counts the total sand added)
     MainLoop: do j = 1, (statistic*(l**2)) 
         
-        ! Restoring variables to 0
-        !A = 0 ! Matrix for compute area
         size = 0 ! Number of toplings in a random addition process
-        !area = 0 ! Number cells affected in a random addition process
         duration = 0 ! Amount of time needed in a random addition process
         next_sand = .false. ! Control var to exit the loop when te queue is empty
         topling = .false. ! Control var to to tell if the topling should be computed
@@ -280,11 +274,11 @@ end subroutine standardSimulation
 
 
 
-subroutine completeSimulation (l, limit, statistic, bdt, randomness, filename)
+subroutine completeSimulation (l, limit, tsa, statistic, bdt, randomness, filename)
     implicit none
 
     ! Input arguments
-    integer, intent(in) :: l, limit, statistic
+    integer, intent(in) :: l, limit, statistic, tsa
     logical, intent(in) :: randomness
     character(len=6), intent(in) :: bdt, filename
 
@@ -306,7 +300,7 @@ subroutine completeSimulation (l, limit, statistic, bdt, randomness, filename)
 
     !Formats
     20 format (1f8.4, a)
-    30 format (I10,a,I10,a,I10,a,I10)
+    30 format (I10,a,I10,a,I10,a,I10,a,I10)
     40 format (I10,a,I10,a,I10,a,I10)
 
     ! Files opening
@@ -408,7 +402,7 @@ subroutine completeSimulation (l, limit, statistic, bdt, randomness, filename)
                 ! Topling
                 if (topling) then
                     topling = .false.
-                    M(x,y) = M(x,y) - limit
+                    M(x,y) = M(x,y) - tsa
                     size = size + 1
                     frame_size = frame_size + 1
 
@@ -416,7 +410,7 @@ subroutine completeSimulation (l, limit, statistic, bdt, randomness, filename)
                     ! 1 2 3
                     ! 8 9 4
                     ! 7 6 5
-                        do k = 1, limit
+                        do k = 1, tsa
                             call random_number(r_randn)
                             i_randn = int(r_randn*9+1)
                             select case (i_randn)
@@ -469,7 +463,7 @@ subroutine completeSimulation (l, limit, statistic, bdt, randomness, filename)
                         end do
 
                     else ! Ordered distribution case
-                        if (limit == 4) then
+                        if (tsa == 4) then
                             nf_queue_length = nf_queue_length +1
                             nf_Queue(1, nf_queue_length) = x
                             nf_Queue(2, nf_queue_length) = y-1
@@ -486,7 +480,7 @@ subroutine completeSimulation (l, limit, statistic, bdt, randomness, filename)
                             nf_Queue(1, nf_queue_length) = x-1
                             nf_Queue(2, nf_queue_length) = y
                         
-                        elseif (limit == 5) then
+                        elseif (tsa == 5) then
                             nf_queue_length = nf_queue_length +1
                             nf_Queue(1, nf_queue_length) = x
                             nf_Queue(2, nf_queue_length) = y-1
@@ -507,7 +501,7 @@ subroutine completeSimulation (l, limit, statistic, bdt, randomness, filename)
                             nf_Queue(1, nf_queue_length) = x
                             nf_Queue(2, nf_queue_length) = y
 
-                        elseif (limit == 8) then
+                        elseif (tsa == 8) then
                             nf_queue_length = nf_queue_length +1
                             nf_Queue(1, nf_queue_length) = x-1
                             nf_Queue(2, nf_queue_length) = y-1
@@ -540,7 +534,7 @@ subroutine completeSimulation (l, limit, statistic, bdt, randomness, filename)
                             nf_Queue(1, nf_queue_length) = x-1
                             nf_Queue(2, nf_queue_length) = y
 
-                        elseif (limit == 9) then
+                        elseif (tsa == 9) then
                             nf_queue_length = nf_queue_length +1
                             nf_Queue(1, nf_queue_length) = x-1
                             nf_Queue(2, nf_queue_length) = y-1
@@ -596,7 +590,7 @@ subroutine completeSimulation (l, limit, statistic, bdt, randomness, filename)
         write (*,20) real(j)*100/real(statistic*l*l),"% done"
 
         ! Writing data of the addition
-        write(1,30) time, ",", size, ",", duration, ",", area
+        write(1,30) time, ",", size, ",", duration, ",", area, ",", sand_in_model
 
     end do MainLoop
 
@@ -630,6 +624,7 @@ subroutine genAnimData (l, limit, frames, bdt, randomness)
     !Formats
     10 format (I3,a)
     20 format (I3)
+    30 format (1f8.4, a)
 
     ! Files opening
     open (1, file = "temp/AnimDataM.dat", status = 'new')
@@ -905,6 +900,9 @@ subroutine genAnimData (l, limit, frames, bdt, randomness)
             if (nf_queue_length == 0) then
                 next_sand = .true.
             end if
+
+            ! Printing the current completation percentage
+            write (*,30) real(j)*100/real(frames),"% done"
 
             ! Writing matrix on file
             writerLoop: do y = 1, (l-1)

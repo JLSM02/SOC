@@ -2,8 +2,15 @@ import sandpilefort as sdf
 import os
 import time
 
+############################
+#
+# 2º apartado variaciones, Standard -> CC abiertas, saca tmaños , duraciones y areas.
+# Distribución ordenada a los 8 vecinos.
+#
+###########################
+
 statistics = [10000]
-l = [16, 32]
+l = [64]
 name="sim003"
 limit = 8
 
