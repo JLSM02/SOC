@@ -1,6 +1,6 @@
 This repository aims to be a portfolio of my work during my Bachelor's Final Project in the Physics Degree.
 
--The .f90 file is a Fortran file, containig some subroutines which are the same physics simulation with different properties.
+-The .f90 file is a Fortran file, containig some subroutines which are the same physics simulation with different properties:
 
  	·standardsimulation: only stores data for size and time, it always use open boundary conditions. Faster
    
@@ -12,6 +12,6 @@ This repository aims to be a portfolio of my work during my Bachelor's Final Pro
 
 -The simulationX.py files are used to call the fortran subroutine several times and manage the data.
 
--The analisisX.ipynb files are data analysis of physics simulations.
+-The analisisX.ipynb notebooks are used for data analysis of physics simulations.
 
 For compiling Fortran files to python modules type: python -m numpy.f2py -c --fcompiler=gnu95 --compiler=mingw32 <programName>.f90 -m <moduleName>
