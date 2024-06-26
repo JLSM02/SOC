@@ -3,7 +3,7 @@ import os
 
 ############################
 #
-# 1º apartado variaciones, Standard -> CC abiertas, saca tmaños , duraciones y areas.
+# 1º apartado variaciones, Complete con CC abiertas, saca tmaños , duraciones y areas.
 # Distribución aleatoria con límite 3.
 #
 ###########################

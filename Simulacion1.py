@@ -3,7 +3,7 @@ import os
 
 ############################
 #
-# Simulación principal, Standard-> CC abiertas, solo saca tmaños y duraciones
+# Simulación principal, Standard-> CC abiertas, solo saca tamaños y duraciones
 # Distribución aleatoria con límite 3.
 #
 ###########################
