@@ -8,7 +8,7 @@ This repository aims to be a portfolio of my work during my Bachelor's Final Pro
   
 	·genanimdata: to be used with animationmaker.py
   
-  	·nohomogsimulation: work in progress.
+  	·prechargedsimulation: used to study phase transitions, first initilize the system with a given amount of sand, then simulate during some frames
 
 -The simulationX.py files are used to call the fortran subroutine several times and manage the data.
 
